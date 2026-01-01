@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ML Predictor</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .error {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .result {
+        background-color: #e0ffe0;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+      }
+      label {
+        font-weight: bold;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Breast Cancer Predictor</h1>
+
+      <!-- Display errors -->
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <!-- Display prediction results -->
+      {% if prediction %}
+      <div class="result">
+        <h2>Prediction Results:</h2>
+        <p>Logistic Regression: {{ prediction.logistic }}</p>
+        <p>Decision Tree: {{ prediction.tree }}</p>
+      </div>
+      {% endif %}
+
+      <!-- Input form -->
+      <form method="POST">
+        {% csrf_token %}
+        <label>Enter feature values (comma-separated):</label>
+        <input
+          type="text"
+          name="features"
+          placeholder="Ex: 17.99,10.38,122.8,..."
+        />
+        <button type="submit">Predict</button>
+      </form>
+
+      <p style="margin-top: 15px; font-size: 0.9em; color: #555">
+        You can enter any number of features. Missing features will be filled
+        automatically.
+      </p>
+    </div>
+  </body>
+</html>
